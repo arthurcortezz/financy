@@ -145,15 +145,15 @@ const styles = StyleSheet.create({
     width: 189,
   },
   button: {
-    marginTop: '20%',
+    marginTop: 30,
     height: 128,
     width: '80%',
   },
   container: {
+    height: '100%',
     width: '100%',
-    flex: 1,
-    paddingTop: Constants.statusBarHeight,
     backgroundColor: 'white',
     alignItems: 'center',
+    justifyContent: 'center',
   },
 });

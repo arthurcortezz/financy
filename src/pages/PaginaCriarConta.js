@@ -14,34 +14,6 @@ export default function PaginaCriarConta({ navigation }) {
     navigation.navigate(pagina);
   };
 
-  let erro = false;
-
-  const validarEmail = () => {
-    // Expressão regular para validar o formato do e-mail
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    if (emailRegex.test(email)) {
-      if (senha === confirmarSenha) {
-        return true;
-      }
-    } else {
-      Alert.alert('Erro', 'Digite um e-mail válido');
-      erro = true;
-    }
-  };
-  const validarSenha = () => {
-    if (senha === confirmarSenha) {
-      if (senha.length >= 8) {
-        return true;
-      } else {
-        erro = true;
-        Alert.alert('Erro', 'A senha deve conter no mínimo 8 caracteres');
-      }
-    } else {
-      erro = true;
-      Alert.alert('Erro', 'As senhas não coincidem');
-    }
-  };
-
   const registrar = async () => {
     const response = await fetch('http://192.168.0.3:3001/conta/cadastrar', {
       method: 'POST',
@@ -147,11 +119,10 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   container: {
+    height: '100%',
     width: '100%',
-    flex: 1,
-    alignContent: 'center',
-    paddingTop: Constants.statusBarHeight,
     backgroundColor: 'white',
     alignItems: 'center',
+    justifyContent: 'center',
   },
 });

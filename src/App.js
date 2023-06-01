@@ -14,10 +14,26 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="PrimeiroAcesso" component={PaginaPrimeiroAcesso} />
-        <Stack.Screen name="CriarConta" component={PaginaCriarConta} />
-        <Stack.Screen name="Login" component={PaginaLogin} />
-        <Stack.Screen name="Principal" component={PaginaPrincipal} />
+        <Stack.Screen
+          name="PrimeiroAcesso"
+          component={PaginaPrimeiroAcesso}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CriarConta"
+          component={PaginaCriarConta}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={PaginaLogin}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Principal"
+          component={PaginaPrincipal}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

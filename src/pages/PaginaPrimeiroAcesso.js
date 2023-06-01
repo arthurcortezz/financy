@@ -90,11 +90,10 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   container: {
+    height: '100%',
     width: '100%',
-    flex: 1,
-    alignContent: 'center',
-    paddingTop: Constants.statusBarHeight,
     backgroundColor: 'white',
     alignItems: 'center',
+    justifyContent: 'center',
   },
 });
