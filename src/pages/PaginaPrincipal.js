@@ -2,10 +2,18 @@ import React from 'react';
 import { useRoute } from '@react-navigation/native';
 import { Text, View, StyleSheet, Image } from 'react-native';
 import { Button } from '@rneui/themed';
+import { useEffect } from 'react';
 
-export default function PaginaPrincipal() {
+import { MenuInferior } from '../components';
+
+export default function PaginaPrincipal({ navigation }) {
   const route = useRoute();
   const usuario = route.params?.usuario;
+
+  useEffect(() => {
+    if (!usuario) navigation.navigate('Login');
+  }, []);
+
   return (
     <View style={styles.container}>
       <View
@@ -36,7 +44,7 @@ export default function PaginaPrincipal() {
             <View style={{ flexDirection: 'column' }}>
               <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Olá,</Text>
               <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
-                {usuario.nome}
+                {usuario ? usuario.nome : 'Usuário'}
               </Text>
             </View>
           </View>
@@ -198,6 +206,7 @@ export default function PaginaPrincipal() {
           </View>
         </View>
       </View>
+      <MenuInferior navigation={navigation} usuario={usuario} />
     </View>
   );
 }
