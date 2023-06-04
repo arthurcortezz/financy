@@ -7,6 +7,7 @@ import {
   PaginaLogin,
   PaginaPrincipal,
 } from './pages';
+import PaginaDespesa from './pages/PaginaDespesa';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +33,11 @@ export default function App() {
         <Stack.Screen
           name="Principal"
           component={PaginaPrincipal}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="Despesa"
+          component={PaginaDespesa}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

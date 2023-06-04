@@ -20,8 +20,8 @@ export default function PaginaLogin({ navigation }) {
     }).toString();
 
     try {
-      const response = await fetch(
-        `http://192.168.0.3:3001/conta/entrar?${queryParams}`,
+      const response = await fetch (
+        `http://192.168.0.103:3001/conta/entrar?${queryParams}`,
         {
           method: 'GET',
           headers: {

@@ -15,7 +15,7 @@ export default function PaginaCriarConta({ navigation }) {
   };
 
   const registrar = async () => {
-    const response = await fetch('http://192.168.0.3:3001/conta/cadastrar', {
+    const response = await fetch('http://192.168.0.103:3001/conta/cadastrar', {
       method: 'POST',
       body: JSON.stringify({
         nome,
