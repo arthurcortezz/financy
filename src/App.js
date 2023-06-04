@@ -6,6 +6,9 @@ import {
   PaginaCriarConta,
   PaginaLogin,
   PaginaPrincipal,
+  PaginaHistorico,
+  PaginaNovaTransacao,
+  PaginaReceita,
 } from './pages';
 import PaginaDespesa from './pages/PaginaDespesa';
 
@@ -35,10 +38,28 @@ export default function App() {
           component={PaginaPrincipal}
           options={{ headerShown: false }}
         />
+        
+
+        <Stack.Screen
+          name="NovaTransacao"
+          component={PaginaNovaTransacao}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Historico"
+          component={PaginaHistorico}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Receita"
+          component={PaginaReceita}
+
+          options={{ headerShown: false }}
+        />
         <Stack.Screen 
           name="Despesa"
           component={PaginaDespesa}
-          options={{ headerShown: false }}
+          options={{ headerShown: false }} 
         />
       </Stack.Navigator>
     </NavigationContainer>
