@@ -113,7 +113,10 @@ export default function PaginaPrincipal({ navigation }) {
             if (mes === mesListagem)
               return (
                 <>
-                  <View style={{ alignItems: 'center', width: '30%' }}>
+                  <View
+                    key={`${index}-meses`}
+                    style={{ alignItems: 'center', width: '30%' }}
+                  >
                     <Text style={{ fontSize: 14, fontWeight: 800 }}>
                       {meses[index - 1]}
                     </Text>
