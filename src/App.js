@@ -6,6 +6,9 @@ import {
   PaginaCriarConta,
   PaginaLogin,
   PaginaPrincipal,
+  PaginaHistorico,
+  PaginaNovaTransacao,
+  PaginaReceita,
 } from './pages';
 
 const Stack = createStackNavigator();
@@ -32,6 +35,21 @@ export default function App() {
         <Stack.Screen
           name="Principal"
           component={PaginaPrincipal}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="NovaTransacao"
+          component={PaginaNovaTransacao}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Historico"
+          component={PaginaHistorico}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Receita"
+          component={PaginaReceita}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
