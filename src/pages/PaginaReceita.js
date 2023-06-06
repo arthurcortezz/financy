@@ -45,6 +45,7 @@ export default function PaginaPrincipal({ navigation }) {
         <View style={{ position: 'relative', width: '100%' }}>
           <Text
             style={{
+              top:10,
               position: 'absolute',
               paddingLeft: 20,
               color: 'white',
@@ -59,14 +60,17 @@ export default function PaginaPrincipal({ navigation }) {
               flexDirection: 'row',
               position: 'absolute',
               right: 20,
-              width: 200,
+              width: 180,
             }}
           >
-            <Image source={require('../../assets/editar-texto.png')} />
+            <Image source={require('../../assets/editar-texto.png')} style={{
+              top: 8,
+              left: 120
+            }}/>
             <Input
               style={{
                 color: 'white',
-                fontSize: 24,
+                fontSize: 25,
                 fontWeight: 'bold',
               }}
             >
@@ -141,6 +145,7 @@ export default function PaginaPrincipal({ navigation }) {
         </TouchableOpacity>
       </View>
       <MenuInferior navigation={navigation} usuario={usuario} />
+     
     </View>
   );
 }

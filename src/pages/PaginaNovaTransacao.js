@@ -103,7 +103,9 @@ export default function PaginaPrincipal({ navigation }) {
             padding: 20,
             margin: 5,
           }}
-          onPress={() => {}}
+          onPress={() => {
+            navigation.navigate('Despesa', { usuario: usuario });
+          }}
         >
           <Text
             style={{
@@ -121,7 +123,6 @@ export default function PaginaPrincipal({ navigation }) {
           />
         </TouchableOpacity>
       </View>
-
       <MenuInferior navigation={navigation} usuario={usuario} />
     </View>
   );
