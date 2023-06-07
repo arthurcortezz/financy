@@ -37,7 +37,7 @@ export default function PaginaPrincipal({ navigation }) {
   const enviar = async () => {
     setLoading(true);
     const response = await fetch(
-      'http://192.168.0.3:3001/lancamento/cadastrar',
+      'https://financy-api.onrender.com/lancamento/cadastrar',
       {
         method: 'POST',
         body: JSON.stringify({
