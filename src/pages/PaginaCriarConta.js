@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Input } from '@rneui/themed';
-import { ActivityIndicator, Alert } from 'react-native';
+import { ActivityIndicator, Alert, Button, Input } from 'react-native';
 import { Text, View, StyleSheet, Image } from 'react-native';
 
 export default function PaginaCriarConta({ navigation }) {

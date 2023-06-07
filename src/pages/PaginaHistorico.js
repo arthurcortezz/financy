@@ -112,17 +112,18 @@ export default function PaginaPrincipal({ navigation }) {
           {meses.map((mesListagem, index) => {
             if (mes === mesListagem)
               return (
-                <>
-                  <View
-                    key={`${index}-meses`}
-                    style={{ alignItems: 'center', width: '30%' }}
-                  >
+                <View
+                  key={`${index}-meses`}
+                  style={{ flexDirection: 'row', alignItems: 'center' }}
+                >
+                  <View style={{ width: '30%', alignItems: 'center' }}>
                     <Text style={{ fontSize: 14, fontWeight: 800 }}>
                       {meses[index - 1]}
                     </Text>
                   </View>
                   <View
                     style={{
+                      alignItems: 'center',
                       backgroundColor: '#D9D9D9',
                       alignItems: 'center',
                       width: '40%',
@@ -137,7 +138,7 @@ export default function PaginaPrincipal({ navigation }) {
                       {meses[index + 1]}
                     </Text>
                   </View>
-                </>
+                </View>
               );
           })}
         </View>
