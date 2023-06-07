@@ -1,7 +1,9 @@
+import { format } from 'date-fns';
+import { Button } from '@rneui/themed';
 import React, { useState, useEffect } from 'react';
 import { useRoute } from '@react-navigation/native';
 import { TextInputMask } from 'react-native-masked-text';
-
+import DateTimePicker from '@react-native-community/datetimepicker';
 import {
   Text,
   View,
@@ -12,41 +14,35 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Alert,
-  Button,
 } from 'react-native';
 
-import {
-  MenuInferior,
-  InputDescricao,
-  InputSelect,
-  InputData,
-} from '../components';
+import { MenuInferior, InputDescricao, InputSelect } from '../components';
 
-export default function PaginaPrincipal({ navigation }) {
+export default function PaginaReceita({ navigation }) {
   const route = useRoute();
   const usuario = route.params?.usuario;
 
-  const [dataLancamento, setDataLancamento] = useState('');
   const [valor, setValor] = useState(0);
   const [descricao, setDescricao] = useState('');
   const [categoria, setCategoria] = useState('');
   const [loading, setLoading] = useState(false);
   const [valorFormatado, setValorFormatado] = useState('');
-  const [open, setOpen] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [dataLancamento, setDataLancamento] = useState(new Date());
 
   const enviar = async () => {
     setLoading(true);
     const response = await fetch(
-      'https://financy-api.onrender.com/lancamento/cadastrar',
+      'http://192.168.0.3:3001/lancamento/cadastrar',
       {
         method: 'POST',
         body: JSON.stringify({
           valor: valorFormatado,
-          dataLancamento,
+          dataLancamento: formattedDate,
           descricao,
           categoria,
-          idUsuario: usuario._id,
-          tipo: 'receita',
+          email: usuario.email,
+          tipo: 'Receita',
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -57,13 +53,20 @@ export default function PaginaPrincipal({ navigation }) {
     const data = await response.json();
     if (response.ok) {
       Alert.alert('Sucesso', `${data.mensagem}`);
-      navigation.navigate('NovaTransacao');
+      navigation.navigate('NovaTransacao', { usuario: usuario });
       setLoading(false);
     } else {
       Alert.alert('Ocorreu um erro', data.mensagem);
       setLoading(false);
     }
   };
+  const handleDateChange = (event, date) => {
+    setShowDatePicker(false);
+    if (date !== undefined) {
+      setDataLancamento(date);
+    }
+  };
+  const formattedDate = format(dataLancamento, 'dd/MM/yyyy');
 
   useEffect(() => {
     if (!usuario) navigation.navigate('Login');
@@ -125,7 +128,7 @@ export default function PaginaPrincipal({ navigation }) {
                     style={{ width: 25, height: 25 }}
                     source={require('../../assets/editar-texto.png')}
                   />
-                  {/* <TextInputMask
+                  <TextInputMask
                     style={{
                       fontSize: 20,
                       marginLeft: 10,
@@ -149,7 +152,7 @@ export default function PaginaPrincipal({ navigation }) {
                       text = text.replace('.', '');
                       setValorFormatado(Number(text / 100));
                     }}
-                  /> */}
+                  />
                 </View>
               </View>
             </TouchableWithoutFeedback>
@@ -181,7 +184,59 @@ export default function PaginaPrincipal({ navigation }) {
                   { label: 'Empréstimos', value: 'emprestimos' },
                 ]}
               />
-              <InputData valor={dataLancamento} setValor={setDataLancamento} />
+              <View
+                style={{ width: '100%', paddingHorizontal: 20, marginTop: 20 }}
+              >
+                <Text
+                  style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}
+                >
+                  Data
+                </Text>
+              </View>
+              <View
+                style={{
+                  alignItems: 'center',
+                  width: '100%',
+                  marginTop: 20,
+                }}
+              >
+                <Button
+                  radius={5}
+                  color="#9C29B2"
+                  onPress={() => setShowDatePicker(true)}
+                >
+                  <Text
+                    style={{
+                      color: 'white',
+                      textAlign: 'center',
+                      fontSize: 15,
+                      fontWeight: 700,
+                    }}
+                  >
+                    Selecionar Data
+                  </Text>
+                </Button>
+                <Text
+                  style={{
+                    marginTop: 20,
+                    color: 'black',
+                    textAlign: 'center',
+                    fontSize: 15,
+                    fontWeight: 700,
+                  }}
+                >
+                  {formattedDate}
+                </Text>
+              </View>
+              {showDatePicker && (
+                <DateTimePicker
+                  value={dataLancamento}
+                  mode="date"
+                  is24Hour={true}
+                  display="default"
+                  onChange={handleDateChange}
+                />
+              )}
               <TouchableOpacity
                 style={{ alignItems: 'center', marginVertical: 30 }}
                 onPress={() => enviar()}

@@ -1,7 +1,5 @@
-import * as React from 'react';
 import { Button } from '@rneui/themed';
 import { Text, View, StyleSheet, Image } from 'react-native';
-import Constants from 'expo-constants';
 
 export default function PaginaPrimeiroAcesso({ navigation }) {
   const redirecionar = (pagina) => {
@@ -28,7 +26,7 @@ export default function PaginaPrimeiroAcesso({ navigation }) {
         <Button
           radius={5}
           color="#9C29B2"
-          onPress={() => redirecionar('CriarConta')}
+          onPress={() => redirecionar('NovaConta')}
         >
           <Text
             style={{

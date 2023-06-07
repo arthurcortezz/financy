@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
   PaginaPrimeiroAcesso,
-  PaginaCriarConta,
+  PaginaNovaConta,
   PaginaLogin,
   PaginaPrincipal,
   PaginaHistorico,
@@ -24,8 +24,8 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="CriarConta"
-          component={PaginaCriarConta}
+          name="NovaConta"
+          component={PaginaNovaConta}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -53,10 +53,10 @@ export default function App() {
           component={PaginaReceita}
           options={{ headerShown: false }}
         />
-        <Stack.Screen 
+        <Stack.Screen
           name="Despesa"
           component={PaginaDespesa}
-          options={{ headerShown: false }} 
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

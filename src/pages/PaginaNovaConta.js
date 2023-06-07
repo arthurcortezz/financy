@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
-import { ActivityIndicator, Alert, Button, Input } from 'react-native';
+import { useState } from 'react';
+import { Button } from '@rneui/themed';
 import { Text, View, StyleSheet, Image } from 'react-native';
+import { ActivityIndicator, Alert } from 'react-native';
+import { InputDescricao } from '../components';
 
-export default function PaginaCriarConta({ navigation }) {
+export default function PaginaNovaConta({ navigation }) {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const [loading, setLoading] = useState(false);
   const [confirmarSenha, setConfirmarSenha] = useState('');
+
+  const [loading, setLoading] = useState(false);
 
   const redirecionar = (pagina) => {
     navigation.navigate(pagina);
   };
 
   const registrar = async () => {
-
     setLoading(true);
     const response = await fetch(
       'https://financy-api.onrender.com/conta/cadastrar',
@@ -31,7 +33,6 @@ export default function PaginaCriarConta({ navigation }) {
         },
       }
     );
-
 
     const data = await response.json();
     if (response.ok) {
@@ -56,23 +57,25 @@ export default function PaginaCriarConta({ navigation }) {
           />
           <View style={styles.center}>
             <Text style={styles.center.superior}>
-              Crie já sua conta e tenha{' '}
+              Crie já sua conta e tenha
             </Text>
             <Text style={styles.center.superior}>mais organização </Text>
             <Text style={styles.center.superior}>financeira!</Text>
           </View>
           <View style={styles.input}>
-            <Input placeholder="Nome" onChangeText={(e) => setNome(e)} />
-            <Input placeholder="E-mail" onChangeText={(e) => setEmail(e)} />
-            <Input
-              placeholder="Senha"
-              secureTextEntry={true}
-              onChangeText={(e) => setSenha(e)}
+            <InputDescricao setValor={setNome} valor={nome} nome={'Nome'} />
+            <InputDescricao setValor={setEmail} valor={email} nome={'E-mail'} />
+            <InputDescricao
+              senha
+              setValor={setSenha}
+              valor={senha}
+              nome={'Senha'}
             />
-            <Input
-              placeholder="Confirmar senha"
-              secureTextEntry={true}
-              onChangeText={(e) => setConfirmarSenha(e)}
+            <InputDescricao
+              senha
+              setValor={setConfirmarSenha}
+              valor={confirmarSenha}
+              nome={'Confirmar senha'}
             />
           </View>
           <View style={styles.button}>
@@ -114,7 +117,7 @@ export default function PaginaCriarConta({ navigation }) {
 
 const styles = StyleSheet.create({
   input: {
-    width: '80%',
+    width: '100%',
   },
   center: {
     marginTop: 10,
@@ -136,7 +139,7 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     width: '100%',
-    backgroundColor: 'white',
+    backgroundColor: '#EEEEEE',
     alignItems: 'center',
     justifyContent: 'center',
   },
