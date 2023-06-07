@@ -14,6 +14,7 @@ export default function PaginaCriarConta({ navigation }) {
   };
 
   const registrar = async () => {
+
     setLoading(true);
     const response = await fetch(
       'https://financy-api.onrender.com/conta/cadastrar',
@@ -30,6 +31,7 @@ export default function PaginaCriarConta({ navigation }) {
         },
       }
     );
+
 
     const data = await response.json();
     if (response.ok) {

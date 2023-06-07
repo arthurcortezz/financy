@@ -22,7 +22,7 @@ export default function PaginaLogin({ navigation }) {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://192.168.0.3:3001/conta/entrar?${queryParams}`,
+        `https://financy-api.onrender.com/conta/entrar?${queryParams}`,
         {
           method: 'GET',
           headers: {

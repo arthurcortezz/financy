@@ -1,32 +1,34 @@
-import { useEffect } from 'react';
 import React, { useState } from 'react';
 import { useRoute } from '@react-navigation/native';
-import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Text, TextInput, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import { MenuInferior } from '../components';
+import { Input } from '@rneui/themed';
 
 let meses = [
-  'Janeiro',
-  'Fevereiro',
-  'Março',
-  'Abril',
-  'Maio',
-  'Junho',
-  'Julho',
-  'Agosto',
-  'Setembro',
-  'Outubro',
-  'Novembro',
-  'Dezembro',
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro',
 ];
 
 export default function PaginaPrincipal({ navigation }) {
   const route = useRoute();
   const usuario = route.params?.usuario;
 
-  useEffect(() => {
-    if (!usuario) navigation.navigate('Login');
-  }, []);
+  const [valor, setValor] = useState(0);
+  const [valorFormatado, setValorFormatado] = useState(0);
+  const [descricao, setDescricao] = useState();
+  const [categoria, setCategoria] = useState();
+  const [data, setData] = useState();
 
   return (
     <View style={styles.container}>
@@ -36,23 +38,47 @@ export default function PaginaPrincipal({ navigation }) {
           height: 140,
           top: 0,
           alignItems: 'center',
-          backgroundColor: '#9C29B2',
+          backgroundColor: '#EA5454',
           width: '100%',
           flexDirection: 'row',
         }}
       >
-        <Text
-          style={{
-            position: 'relative',
-            marginTop: 60,
-            paddingLeft: 40,
-            color: 'white',
-            fontSize: 20,
-            fontWeight: 'bold',
-          }}
-        >
-          Adicionar nova transação
-        </Text>
+        <View style={{ position: 'relative', width: '100%' }}>
+          <Text
+            style={{
+              top:10,
+              position: 'absolute',
+              paddingLeft: 20,
+              color: 'white',
+              fontSize: 20,
+              fontWeight: 'bold',
+            }}
+          >
+            Adicionar receita
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              position: 'absolute',
+              right: 20,
+              width: 180,
+            }}
+          >
+            <Image source={require('../../assets/editar-texto.png')} style={{
+              top: 8,
+              left: 120
+            }}/>
+            <Input
+              style={{
+                color: 'white',
+                fontSize: 30,
+                fontWeight: 'bold',
+              }}
+            >
+              0,00
+            </Input>
+          </View>
+        </View>
       </View>
       <View
         style={{
@@ -74,9 +100,7 @@ export default function PaginaPrincipal({ navigation }) {
             padding: 20,
             marginTop: 15,
           }}
-          onPress={() => {
-            navigation.navigate('Receita', { usuario: usuario });
-          }}
+          onPress={() => {}}
         >
           <Text
             style={{
@@ -103,9 +127,7 @@ export default function PaginaPrincipal({ navigation }) {
             padding: 20,
             margin: 5,
           }}
-          onPress={() => {
-            navigation.navigate('Despesa', { usuario: usuario });
-          }}
+          onPress={() => {}}
         >
           <Text
             style={{
@@ -123,7 +145,29 @@ export default function PaginaPrincipal({ navigation }) {
           />
         </TouchableOpacity>
       </View>
-      <MenuInferior navigation={navigation} usuario={usuario} />
+
+      <View style={{flex: 1, flexDirection: 'column',  alignItems: 'stretch'}}>
+        <Input
+          style={{ marginTop: 200}}
+          placeholder="Adicionar descrição"
+          secureTextEntry={true}
+          onChangeText={(e) => setDescricao(e)}
+        />
+
+        <Input
+          placeholder="Categoria"
+          secureTextEntry={true}
+          onChangeText={(e) => setCategoria(e)}
+        />
+
+        <Input
+          placeholder="Data"
+          secureTextEntry={true}
+          onChangeText={(e) => setData(e)}
+        />
+      </View>
+
+      <MenuInferior navigation={navigation} usuario={usuario}/>
     </View>
   );
 }
