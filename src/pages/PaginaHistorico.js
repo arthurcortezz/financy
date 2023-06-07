@@ -62,7 +62,7 @@ export default function PaginaHistorico({ navigation }) {
       }).toString();
 
       const response = await fetch(
-        `http://192.168.0.3:3001/lancamento/listarTodos?${queryParams}`,
+        `https://financy-api.onrender.com/lancamento/listarTodos?${queryParams}`,
         {
           method: 'GET',
           headers: {
