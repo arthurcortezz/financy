@@ -1,29 +1,69 @@
-import { useEffect } from 'react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRoute } from '@react-navigation/native';
-import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { TextInputMask } from 'react-native-masked-text';
 
-import { MenuInferior } from '../components';
-import { Input } from '@rneui/themed';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+  ActivityIndicator,
+  Alert,
+  Button,
+} from 'react-native';
 
-let meses = [
-  'Janeiro',
-  'Fevereiro',
-  'Março',
-  'Abril',
-  'Maio',
-  'Junho',
-  'Julho',
-  'Agosto',
-  'Setembro',
-  'Outubro',
-  'Novembro',
-  'Dezembro',
-];
+import {
+  MenuInferior,
+  InputDescricao,
+  InputSelect,
+  InputData,
+} from '../components';
 
 export default function PaginaPrincipal({ navigation }) {
   const route = useRoute();
   const usuario = route.params?.usuario;
+
+  const [dataLancamento, setDataLancamento] = useState('');
+  const [valor, setValor] = useState(0);
+  const [descricao, setDescricao] = useState('');
+  const [categoria, setCategoria] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [valorFormatado, setValorFormatado] = useState('');
+  const [open, setOpen] = useState(false);
+
+  const enviar = async () => {
+    setLoading(true);
+    const response = await fetch(
+      'https://financy-api.onrender.com/lancamento/cadastrar',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          valor: valorFormatado,
+          dataLancamento,
+          descricao,
+          categoria,
+          idUsuario: usuario._id,
+          tipo: 'receita',
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const data = await response.json();
+    if (response.ok) {
+      Alert.alert('Sucesso', `${data.mensagem}`);
+      navigation.navigate('NovaTransacao');
+      setLoading(false);
+    } else {
+      Alert.alert('Ocorreu um erro', data.mensagem);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (!usuario) navigation.navigate('Login');
@@ -31,121 +71,128 @@ export default function PaginaPrincipal({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          position: 'absolute',
-          height: 140,
-          top: 0,
-          alignItems: 'center',
-          backgroundColor: '#6FEB8A',
-          width: '100%',
-          flexDirection: 'row',
-        }}
-      >
-        <View style={{ position: 'relative', width: '100%' }}>
-          <Text
-            style={{
-              top:10,
-              position: 'absolute',
-              paddingLeft: 20,
-              color: 'white',
-              fontSize: 20,
-              fontWeight: 'bold',
-            }}
-          >
-            Adicionar receita
-          </Text>
+      {loading ? (
+        <ActivityIndicator size="small" color="#9C29B2" />
+      ) : (
+        <>
           <View
             style={{
-              flexDirection: 'row',
               position: 'absolute',
-              right: 20,
-              width: 180,
+              height: 140,
+              top: 0,
+              alignItems: 'center',
+              backgroundColor: '#6FEB8A',
+              width: '100%',
+              flexDirection: 'row',
             }}
           >
-            <Image source={require('../../assets/editar-texto.png')} style={{
-              top: 8,
-              left: 120
-            }}/>
-            <Input
+            <TouchableWithoutFeedback
               style={{
-                color: 'white',
-                fontSize: 25,
-                fontWeight: 'bold',
+                left: 10,
+                justifyContent: 'space-between',
+                position: 'relative',
+                width: '100%',
               }}
             >
-              0,00
-            </Input>
+              <View
+                style={{
+                  justifyContent: 'space-between',
+                  flexDirection: 'row',
+                  position: 'absolute',
+                  width: '100%',
+                }}
+              >
+                <Text
+                  style={{
+                    paddingLeft: 50,
+                    color: 'white',
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Adicionar receita
+                </Text>
+                <View
+                  style={{
+                    paddingTop: 25,
+                    paddingRight: 20,
+                    flexDirection: 'row',
+                    position: 'absolute',
+                    right: 0,
+                  }}
+                >
+                  <Image
+                    style={{ width: 25, height: 25 }}
+                    source={require('../../assets/editar-texto.png')}
+                  />
+                  {/* <TextInputMask
+                    style={{
+                      fontSize: 20,
+                      marginLeft: 10,
+                      width: '100%',
+                      color: 'white',
+                    }}
+                    type={'money'}
+                    options={{
+                      precision: 2,
+                      separator: ',',
+                      delimiter: '.',
+                      unit: 'R$',
+                      suffixUnit: '',
+                    }}
+                    value={valor}
+                    maxLength={18}
+                    onChangeText={(text) => {
+                      setValor(text);
+                      text = text.replace('R$', '');
+                      text = text.replace(',', '');
+                      text = text.replace('.', '');
+                      setValorFormatado(Number(text / 100));
+                    }}
+                  /> */}
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
-        </View>
-      </View>
-      <View
-        style={{
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexDirection: 'column',
-          top: 140,
-          position: 'absolute',
-          width: '100%',
-        }}
-      >
-        <TouchableOpacity
-          style={{
-            justifyContent: 'center',
-            width: '100%',
-            flexDirection: 'row',
-            alignItems: 'center',
-            backgroundColor: 'white',
-            padding: 20,
-            marginTop: 15,
-          }}
-          onPress={() => {}}
-        >
-          <Text
+          <View
             style={{
-              marginRight: 20,
-              color: 'black',
-              fontSize: 20,
-              fontWeight: 'bold',
+              top: 140,
+              width: '100%',
             }}
           >
-            Receita
-          </Text>
-          <Image
-            style={{ width: 50, height: 50 }}
-            source={require('../../assets/receita.png')}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            justifyContent: 'center',
-            width: '100%',
-            backgroundColor: 'white',
-            flexDirection: 'row',
-            alignItems: 'center',
-            padding: 20,
-            margin: 5,
-          }}
-          onPress={() => {}}
-        >
-          <Text
-            style={{
-              marginRight: 20,
-              color: 'black',
-              fontSize: 20,
-              fontWeight: 'bold',
-            }}
-          >
-            Despesa
-          </Text>
-          <Image
-            style={{ width: 50, height: 50 }}
-            source={require('../../assets/despesa.png')}
-          />
-        </TouchableOpacity>
-      </View>
-      <MenuInferior navigation={navigation} usuario={usuario} />
-     
+            <ScrollView
+              style={{
+                marginBottom: 200,
+                height: '100%',
+              }}
+            >
+              <InputDescricao
+                setValor={setDescricao}
+                valor={descricao}
+                nome={'Descrição'}
+              />
+              <InputSelect
+                nome={'Categoria'}
+                valor={categoria}
+                setValor={setCategoria}
+                options={[
+                  { label: 'Salário', value: 'salario' },
+                  { label: 'Investimentos', value: 'investimentos' },
+                  { label: 'Empréstimos', value: 'emprestimos' },
+                ]}
+              />
+              <InputData valor={dataLancamento} setValor={setDataLancamento} />
+              <TouchableOpacity
+                style={{ alignItems: 'center', marginVertical: 30 }}
+                onPress={() => enviar()}
+              >
+                <Image source={require('../../assets/enviar.png')} />
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
+          <MenuInferior navigation={navigation} usuario={usuario} />
+        </>
+      )}
     </View>
   );
 }

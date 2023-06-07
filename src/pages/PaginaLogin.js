@@ -20,11 +20,9 @@ export default function PaginaLogin({ navigation }) {
     }).toString();
 
     try {
-
       setLoading(true);
       const response = await fetch(
         `https://financy-api.onrender.com/conta/entrar?${queryParams}`,
-
         {
           method: 'GET',
           headers: {
